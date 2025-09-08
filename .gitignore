@@ -1,0 +1,173 @@
+# === Visual Studio ===
+.vs/ 
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific (MonoDevelop/Xamarin)
+*.userprefs
+
+# Mono crash
+mono_crash.*
+
+# === Build output ===
+[Bb]in/
+[Oo]bj/
+[Dd]ebug*/
+[Rr]elease*/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]*/
+[Aa][Rr][Mm]64/
+bld/
+out/
+Log/
+Logs/
+
+# Web publish / output
+_PublishedWebsites/
+publish/
+*.[Pp]ublish.xml
+*.azurePubxml
+*.pubxml
+*.publishproj
+
+# Do NOT ignore Web.config in MVC
+# Use transforms or user-secrets for sensitive data
+Web.Debug.config
+Web.Release.config
+appsettings.*.json
+
+# IIS Express
+.vs/config/applicationhost.config
+
+# === Packages / dependencies ===
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+
+# Paket
+.paket/paket.exe
+paket-files/
+
+# Node / frontend (if any)
+node_modules/
+dist/
+build/
+wwwroot/dist/
+
+# === IDE tooling / extensions ===
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+_TeamCity*
+*.dotCover
+.axoCover/*
+!.axoCover/settings.json
+_NCrunch_*
+*.mm.*
+AutoTest.Net/
+.cr/personal
+.mfractor/
+.localhistory/
+
+# Python Tools cache
+__pycache__/
+*.pyc
+
+# === Test / coverage ===
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+BenchmarkDotNet.Artifacts/
+coverage*.json
+coverage*.xml
+coverage*.info
+*.coverage
+*.coveragexml
+OpenCover/
+
+# === Misc generated / temp ===
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+*.cache
+*.[Cc]ache
+!?*.[Cc]ache/ 
+~$*
+*~
+*.backup
+*.bak
+
+# === Web / Azure ===
+*.publishsettings
+PublishScripts/
+csx/
+*.build.csdef
+ecf/
+rcf/
+
+# === Database / project metadata ===
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+*.mdf
+*.ldf
+*.ndf
+
+# === Legacy / specific artifacts ===
+Generated\ Files/
+Generated_Code/
+UpgradeLog*.XML
+UpgradeLog*.htm
+_UpgradeReport_Files/
+Backup*/
+ServiceFabricBackup/
+*.rptproj.bak
+*.GhostDoc.xml
+
+# === Optional ===
+# wwwroot/             # if static files are generated there
+# bower_components/    # if using Bower
+# tools/**             # if using Cake (uncomment per your workflow)
+
+#user uploaded profile photos
+Profiles/
+#template
+vendor/
+#project 
+*.csproj

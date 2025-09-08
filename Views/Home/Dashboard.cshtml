@@ -1,0 +1,602 @@
+﻿
+@model FirstTasks.Models.DashModel
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+@{
+    var counts = Session["Count"] as Dictionary<string, int>;
+    var depts = Session["Departments"] as List<string>;
+    var dsgns = Session["Designations"] as List<string>;
+}
+
+
+@section Styles {
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/Styles/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+
+        /*.expandable-row {
+            display: table-row;
+        }
+
+            .expandable-row .details {
+                max-height: 0;*/ /* collapsed */
+        /*overflow: hidden;
+                opacity: 0;*/ /* invisible */
+        /*transition: max-height 0.4s ease, opacity 0.4s ease;
+            }
+
+            .expandable-row.show .details {
+                max-height: 500px;*/ /* enough to fit content */
+        /*opacity: 1;*/ /* visible */
+        /*}*/
+
+    </style>
+}
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">Admin DashBoard</div>
+        </a>
+
+
+
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Interface
+        </div>
+
+
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+               aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Pages</span>
+            </a>
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="@Url.Action("Login", "Home")">Login</a>
+                    <a class="collapse-item" href="@Url.Action("Register", "Home")">Register</a>
+                </div>
+            </div>
+        </li>
+
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+
+
+    </ul>
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Search -->
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+
+                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                             aria-labelledby="searchDropdown">
+                            <form class="form-inline mr-auto w-100 navbar-search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control bg-light border-0 small"
+                                           placeholder="Search for..." aria-label="Search"
+                                           aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+                    <!-- Nav Item - Alerts -->
+                    <!-- Nav Item - Messages -->
+
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">@(Model.User?.Fname)</span>
+                            <img src="@Url.Content(Model.User.Profile)" alt="Profile Picture" width="50" height="50" />
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </nav>
+            <!-- End of Topbar -->
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Welcome @(Model.User?.Fname) @(Model.User?.Lname) !</h1>
+                    <a href="@Url.Action("AddEmp", "Employee")" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                        <i class="fas fa-download fa-sm text-white-50"></i> Add Employee
+                    </a>
+                </div>
+
+                <!-- Content Row -->
+                <div class="row">
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div id="Deptcnt" class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Total Departments
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@counts["DeptCount"]</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div id="Dsgcnt" class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Total Designations
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@counts["DesgCount"]</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                            Total Employees
+                                        </div>
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-auto">
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@counts["TotEmpCount"]</div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pending Requests Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            Employees Under You
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@counts["EmpCount"]</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Start of Employee Table -->
+
+
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Employee List</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+<div id="UpdateData">
+                            <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Designation</th>
+                                        <th>Department</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var emp in Model.Employees)
+                                    {
+                                        <tr>
+                                            <td>@emp.Name</td>
+                                            <td>@emp.Phone</td>
+                                            <td>@emp.Email</td>
+                                            <td>@emp.Designation</td>
+                                            <td>@emp.Department</td>
+                                            <td>
+                                                <a href="@Url.Action("EditEmp", "Employee", new { id = emp.Eid })">
+                                                    <img src="~/images/page_white_edit.png" alt="E" />
+                                                </a>
+                                                &nbsp;
+                                                <a id="delete" data-id="@emp.Eid">
+                                                    <img src="~/images/delete.png" alt="D" />
+                                                </a>
+                                                &nbsp;
+                                                <a class="view-btn"  data-emp='@Html.Raw(Json.Encode(emp))'>
+                                                    <img src="~/images/eye.png" alt="V" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @*<tr id="viewemp-@emp.Eid"  style="display:none;  width :100%;flex-direction:row; justify-content:center;">
+                                            <td colspan="100%" style="background-color:darkslategrey; color:lightgray; justify-content:center;">
+                                                <div class="details" style="text-align:left; width:100%;">
+                                                    <ul style="list-style:none;">
+                                                        <li><strong>Name:</strong> @emp.Name</li>
+                                                        <li><strong>Gender:</strong> @emp.Gender</li>
+                                                        <li><strong>DOB:</strong> @emp.DOB</li>
+                                                        <li><strong>Phone:</strong> @emp.Phone</li>
+                                                        <li><strong>Email:</strong> @emp.Email</li>
+                                                        <li><strong>Department:</strong> @emp.Department</li>
+                                                        <li><strong>Designation:</strong> @emp.Designation</li>
+                                                        <li><strong>City:</strong> @emp.City</li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>*@
+
+                                    }
+                                    @if (Convert.ToInt32(Session["rows"])< @counts["EmpCount"])
+                                    {
+                                    <tr>
+                                        <td id="loadmore" align="center" colspan="6">
+                                            <a href=""> Load More</a>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+    </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Employee Table -->
+                <!-- Content Row -->
+
+
+
+                <div class="row">
+
+                    <!-- Area Chart -->
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <canvas id="myAreaChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pie Chart -->
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-pie pt-4 pb-2">
+                                    <canvas id="myPieChart"></canvas>
+                                </div>
+                                <div class="mt-4 text-center small">
+                                    <span class="mr-2">
+                                        <i class="fas fa-circle text-primary"></i> Direct
+                                    </span>
+                                    <span class="mr-2">
+                                        <i class="fas fa-circle text-success"></i> Social
+                                    </span>
+                                    <span class="mr-2">
+                                        <i class="fas fa-circle text-info"></i> Referral
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2021</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="@Url.Action("Logout", "Employee")">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // attach listener to each view button
+    @foreach (var emp in Model.Employees)
+    {
+        <text>
+        document.getElementById("view-btn-@emp.Eid").addEventListener("click", function () {
+            const row = document.getElementById("viewemp-@emp.Eid");
+            row.style.display = row.style.display === "none" ? "table-row" : "none";
+            //row.classList.toggle("show");
+        });
+        </text>
+    }
+});
+
+
+</script>*@
+
+
+
+
+<!-- jQuery first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- Custom scripts for all pages-->
+<script src="/Scripts/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="/vendor/chart.js/Chart.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="/Scripts/demo/chart-area-demo.js"></script>
+<script src="/Scripts/demo/chart-pie-demo.js"></script>
+
+<script>
+    $(document).ready(function () {
+        //console.log("jQuery version:", $.fn.jquery);
+        //console.log("Validate plugin:", typeof $.fn.validate);
+
+        $('#delete').on("click", function (e) {
+            e.preventDefault();
+            let empId = $(this).data("id"); // get emp.Eid from attribute
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You want to delete this employee?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/Employee/Delete",
+                        type: "POST",
+                        data: { id: empId },
+                        success: function (res) {
+                            if (res.status) {
+                                Swal.fire("Deleted!", res.message, "success").then(() => {
+                                    window.location.href = "/Home/Dashboard";
+                                });
+                            } else {
+                                Swal.fire("Error!", res.message, "error");
+                            }
+                        },
+                        error: function (xhr) {
+                            Swal.fire("Server Error!", xhr.responseText, "error");
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+
+
+    $('#Deptcnt').on("click", function (e) {
+        e.preventDefault();
+        Swal.fire({
+            title: "List of Departments",
+            html: ` <ul style="text-align:left; list-style:disc; margin-left:20px;">
+                @foreach (var dept in depts)
+                {
+                    <li>@dept</li>
+                }
+            </ul>`,
+            icon: "info"
+        })
+
+    });
+
+
+
+    $('#Dsgcnt').on("click", function (e) {
+       e.preventDefault();
+       Swal.fire({
+           title: "List of Designations",
+           html: ` <ul style="text-align:left; list-style:disc; margin-left:20px;">
+               @foreach (var desg in dsgns)
+               {
+                   <li>@desg</li>
+               }
+           </ul>`,
+           icon: "info"
+       })
+
+   });
+
+
+
+    $(document).on("click", ".view-btn", function (e) {
+        //e.preventDefault();
+
+        // Get JSON from data-emp
+        const empData = $(this).attr("data-emp");
+        const emp = JSON.parse(empData);
+        let dob = emp.DOB;        
+        if (dob && dob.includes("/Date")) {
+            let d = new Date(parseInt(dob.replace(/\/Date\((\d+)\)\//, "$1")));
+            dob = d.toLocaleDateString();
+        }
+        // Build SweetAlert HTML
+        let html = `
+       <table style="width:100%; text-align:left; border-collapse:collapse;">
+        <tr><td><strong>Name:</strong></td><td>${emp.Name}</td></tr>
+        <tr><td><strong>Gender:</strong></td><td>${emp.Gender}</td></tr>
+        <tr><td><strong>DOB:</strong></td><td>${dob}</td></tr>
+        <tr><td><strong>Phone:</strong></td><td>${emp.Phone}</td></tr>
+        <tr><td><strong>Email:</strong></td><td>${emp.Email}</td></tr>
+        <tr><td><strong>Department:</strong></td><td>${emp.Department}</td></tr>
+        <tr><td><strong>Designation:</strong></td><td>${emp.Designation}</td></tr>
+        <tr><td><strong>City:</strong></td><td>${emp.City}</td></tr>
+    </table>
+    `;
+
+        Swal.fire({
+            title: "Employee Details",
+            html: html,
+            icon: "info"
+        });
+    });
+
+
+    $(document).on("click", "#loadmore a", function (e) {
+        e.preventDefault();                  
+     
+        $.ajax({
+            url: "/Employee/LoadMore",
+            type: "GET",
+            data: {Phone:@Model.User.Phone},
+                   success: function (res) {
+                        $("#UpdateData").html(res);
+                        }
+                    ,
+                    error: function (xhr) {
+                        Swal.fire("Server Error!", xhr.responseText, "error");
+                    }
+                });
+            
+    });
+    
+
+</script>
+  
+
+

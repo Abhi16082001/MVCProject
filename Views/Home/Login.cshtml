@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+@section Styles {
+    <link href="/Styles/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+}
+<div class="d-flex justify-content-center align-items-center min-vh-100 " style="background: linear-gradient(to bottom, rgba(216, 249, 216, 0.717), rgba(163, 249, 163, 0.475)) " ;>
+
+    <div class="card o-hidden border-0 shadow-lg " style="width: 40vw; background: linear-gradient(to right, rgba(54, 241, 126, 0.275),rgba(48, 180, 99, 0.275)) ">
+        <!-- fixed width -->
+        <div class="card-body p-5">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+            </div>
+            <form id="loginForm" class="user">
+        
+                <div class="form-group">
+                    <input type="number" name="Username" class="form-control form-control-user" placeholder="Enter User ID">
+                </div>
+             
+                <div class="form-group">
+                    <input type="password" name="Password" class="form-control form-control-user" placeholder="Enter Password">
+                </div>
+
+                <div style="color:red;">
+                    @ViewBag.Message
+                </div>
+
+
+                <button type="submit" class="btn btn-primary btn-user btn-block">
+                    Login
+                </button>
+
+            </form> <hr> <div class="text-center"> <a class="small" href="@Url.Action("Register", "Home")">Create an Account!</a> </div>
+
+        </div>
+
+        <div id="loader" style="display:none; margin:auto; margin-bottom:1%;">
+            <img src="~/images/greenloader.gif" width="70px" height="50px" />
+        </div>
+    </div>
+
+</div>
+
+<!-- jQuery first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/Scripts/sb-admin-2.min.js"></script>
+
+<!-- jQuery Validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        //console.log("jQuery version:", $.fn.jquery);
+        //console.log("Validate plugin:", typeof $.fn.validate);
+
+        $("#loginForm").validate({
+            rules: {
+                Username: {
+                    required: true,
+                    minlength: 3
+                },
+                Password: {
+                    required: true,               
+                }                
+            },
+            messages: {
+                Username: {
+                    required: "Please enter your User ID !"
+                },
+                Password: {
+                    required: "Please enter Password !"
+                }
+            },
+            errorClass: "text-danger",           
+
+            // ✅ submitHandler is the correct way for AJAX
+            submitHandler: function (form) {
+                console.log("Form validation passed, now running AJAX !!");
+
+                const formdata = new FormData(form);
+             
+                $.ajax({
+                    url: "/Home/Authentication",
+                    type: "POST",
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json",
+                    beforeSend: function () {
+
+                        $("#loader").show();
+                    },
+                    complete: function () {
+
+                        $("#loader").hide();
+                    },
+                    success: function (res) {
+                        //setTimeout(function () {
+                        if (res.status) {
+                            Swal.fire('Success !', res.message, 'success').then(() => {
+                                window.location.href = "/Home/Dashboard";
+                            });
+                        } else {
+                            Swal.fire('Error !', res.message, 'error').then(() => {
+                                window.location.href = "/Home/Login";
+                            });
+                            }
+                        //}, 7000); 
+                    },
+                    error: function (xhr) {
+                        Swal.fire('Error !', xhr.message, 'error')
+                    }
+                });
+            
+            }
+        });
+
+    });
+</script>

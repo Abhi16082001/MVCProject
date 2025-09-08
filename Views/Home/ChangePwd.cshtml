@@ -1,0 +1,124 @@
+﻿
+@model FirstTasks.Models.SetPassword
+@{
+    ViewBag.Title = "ChangePwd";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+
+@section Styles {
+    <link href="/Styles/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+}
+<div class="d-flex justify-content-center align-items-center min-vh-100 " style="background: linear-gradient(to bottom, rgba(216, 249, 216, 0.717), rgba(163, 249, 163, 0.475)) " ;>
+
+    <div class="card o-hidden border-0 shadow-lg " style="width: 40vw; background: linear-gradient(to right, rgba(54, 241, 126, 0.275),rgba(48, 180, 99, 0.275)) ">
+        <!-- fixed width -->
+        <div class="card-body p-5">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Change Password </h1>
+            </div>
+            <form id="Change" class="user" >
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="Oldpwd" placeholder="Old Password">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control form-control-user" id="newpwd" name="newpwd" placeholder="Create Password">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control form-control-user" name="cpwd" placeholder="Confirm Password">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-user btn-block">
+                    Change Password
+                </button>
+                @if (ViewBag.Message != null)
+                {
+                    <div style="color:red;">
+                        @ViewBag.Message
+                    </div>
+                }
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- jQuery first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/Scripts/sb-admin-2.min.js"></script>
+
+<!-- jQuery Validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
+
+<script>
+
+
+
+
+    $("#Change").validate({
+        rules: {
+            newpwd: {
+                required: true,
+                minlength: 8,
+                maxlength: 20,
+            },
+            cpwd: {
+                required: true,
+                equalTo: "#newpwd" // ← This is the compare validator
+            }
+        },
+        messages: {
+            Password: {
+                required: "Please enter a password",
+                minlength: "Password must be at least 8 characters",
+                minlength: "Password must be at most 20 characters"
+            },
+            ConfirmPassword: {
+                required: "Please confirm your password",
+                equalTo: "Password and Confirm Password must match"
+            }
+        },
+        errorClass: "text-danger",
+        submitHandler: function (form) {
+            // If validation passes, submit via AJAX
+            const formData = new FormData(form);
+            $.ajax({
+                url: "/Home/VerifyPwd",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                success: function (res) {
+                    if (res.status) {
+                        Swal.fire('Success !', res.message, 'success').then(() => {
+                            window.location.href = "/Home/Dashboard";
+                        });
+                    } else {
+                        Swal.fire('Error !', res.message, 'error').then(() => {
+                            window.location.href = "/Home/ChangePwd";
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+
+
+</script>

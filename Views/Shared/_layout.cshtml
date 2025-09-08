@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_layout</title>
+    <link href="~/Styles/LayoutStyle.css" rel="stylesheet" />
+    @RenderSection("Styles", required: false)
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+
+<body>
+    <header class="mynav">
+        <img src="~/images/MacreelLogo.png" alt="logo" />
+        <nav>
+            <a href="@Url.Action("Login", "Home")" id="login">Login</a>
+        </nav>
+    </header>
+    <div>
+        @RenderBody()
+    </div>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

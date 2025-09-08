@@ -1,0 +1,54 @@
+###############################################################################
+# Set default behavior to automatically normalize line endings.
+###############################################################################
+* text=auto
+
+###############################################################################
+# Command prompt diff (optional; uncomment if needed for custom diffs)
+###############################################################################
+#*.cs     diff=csharp
+
+###############################################################################
+# Force binary merges for project/solution files 
+# (prevents conflict markers in Visual Studio projects)
+###############################################################################
+#*.sln       merge=binary
+#*.csproj    merge=binary
+#*.vbproj    merge=binary
+#*.fsproj    merge=binary
+
+###############################################################################
+# Binary files (no diffs)
+###############################################################################
+*.jpg   binary
+*.jpeg  binary
+*.png   binary
+*.gif   binary
+*.ico   binary
+*.dll   binary
+*.exe   binary
+
+###############################################################################
+# Normalize common text/code file types for MVC
+###############################################################################
+*.cs       text eol=crlf
+*.cshtml   text eol=crlf
+*.vbhtml   text eol=crlf
+*.config   text eol=crlf
+*.resx     text eol=crlf
+*.js       text eol=crlf
+*.ts       text eol=crlf
+*.css      text eol=crlf
+*.scss     text eol=crlf
+*.html     text eol=crlf
+*.xml      text eol=crlf
+*.json     text eol=crlf
+*.yml      text eol=crlf
+*.md       text eol=lf
+
+###############################################################################
+# Optional: diff behavior for documents
+###############################################################################
+#*.docx  diff=astextplain
+#*.pdf   diff=astextplain
+#*.rtf   diff=astextplain

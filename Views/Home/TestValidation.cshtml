@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Test Validation</title>
+</head>
+<body>
+    <form id="empForm">
+        <label>Name</label>
+        <input type="text" name="Name" />
+
+        <label>Email</label>
+        <input type="text" name="Email" />
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- jQuery first -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- jQuery Validation plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
+
+    <!-- Your custom script -->
+    <script>
+        $(document).ready(function () {
+            console.log("jQuery version:", $.fn.jquery);
+            console.log("Validate plugin:", $.fn.validate);
+
+            $("#empForm").validate({
+                rules: {
+                    Name: {
+                        required: true,
+                        minlength: 3
+                    },
+                    Email: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    Name: {
+                        required: "Please enter your username!",
+                        minlength: "Username must be at least 3 characters!"
+                    },
+                    Email: {
+                        required: "Please enter your email!",
+                        email: "Enter a valid email address!"
+                    }
+                },
+                errorClass: "text-danger"
+            });
+        });
+    </script>
+</body>
+</html>

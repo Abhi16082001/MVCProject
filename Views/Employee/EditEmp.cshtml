@@ -1,0 +1,273 @@
+﻿@model FirstTasks.Models.Employee
+
+@{
+    ViewBag.Title = "EditEmp";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+
+
+@section Styles {
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/Styles/sb-admin-2.min.css" rel="stylesheet">
+}
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+
+    <div class="card o-hidden border-0 shadow-lg my-5" style="width: 45vw; background: linear-gradient(to right, lightblue , teal )">
+        <!-- set card width -->
+        <div class="card-body p-5">
+            <!-- removed nested row bg-image -->
+
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Edit Employee Details</h1>
+            </div>
+
+            <form id="empForm" class="user">
+                <input type="hidden" name="Eid" value="@(Model?.Eid)" />
+
+                <div class="form-group">
+                    <input type="text" name="Name" value="@(Model?.Name)" class="form-control form-control-user" id="exampleFirstName"
+                           placeholder="First Name">
+                </div>
+
+                <div class="form-group">
+                    <input type="number" value="@(Model?.Phone)" name="Phone" class="form-control form-control-user" id="exampleInputPhone"
+                           placeholder="Phone Number">
+                </div>
+                <div id="GenderContainer">
+                    <div class="form-group" style=" background-color:white; display:flex; flex-direction:row;justify-content:flex-start; gap:10%; padding:15px 5px 5px 15px;  border-radius:25px; border:solid 1px lightgrey; font-size:small;">
+                        <label>Choose Gender:</label>
+                        <div style="">
+                            <input type="radio" id="exampleInputGender"
+                                   value="Male" @(Model?.Gender == "Male" ? "checked" : "") name="Gender">
+                            <label>Male</label>
+                        </div>
+                        <div>
+                            <input type="radio" style="" id="exampleInputGender"
+                                   value="Female" @(Model?.Gender == "Female" ? "checked" : "") name="Gender">
+                            <label>Female</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" name="Email" value="@(Model?.Email)" class="form-control form-control-user" id="exampleInputEmail"
+                           placeholder="Email Address">
+                </div>
+
+
+
+
+                <div class="form-group">
+                    <input type="date" value="@(Model?.DOB.ToString("yyyy-MM-dd"))" class="form-control form-control-user" id="dob" name="DOB"
+                           placeholder="Date of Birth">
+                </div>
+
+
+                <div class="form-group">
+                    <select class="form-control custom-select" name="City" style="border-radius: 25px; height: 48px; padding-left: 15px; font-size: small ">
+                        <option disabled selected>Choose City</option>
+                        <option @(Model?.City == "Laxmi Nagar" ? "selected" : "")>Laxmi Nagar</option>
+                        <option @(Model?.City == "Sarojini Nagar" ? "selected" : "")>Sarojini Nagar</option>
+                        <option @(Model?.City == "Nirman Vihar" ? "selected" : "")>Nirman Vihar</option>
+                        <option @(Model?.City == "Chandni Chowk" ? "selected" : "")>Chandni Chowk</option>
+                        <option @(Model?.City == "Others" ? "selected" : "")>Others</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <select class="form-control custom-select" id="Department" name="Department" style="border-radius: 25px; height: 48px; padding-left: 15px; font-size: small ">
+                        <option value="">Select Department</option>
+                        @foreach (var dept in ViewBag.Departments)
+                        {
+                            <option value="@dept.Dname" @(dept.Dname == Model?.Department ? "selected" : "")>
+                                @dept.Dname
+                            </option>
+                        }
+                    </select>
+
+                </div>
+
+
+
+                <div class="form-group">
+                    <select class="form-control custom-select" id="Designation" name="Designation" style="border-radius:25px ; height:48px;  padding-left:15px; font-size:small">
+                        <option value="">Select Designation</option>
+                        @foreach (var dsg in ViewBag.Designations)
+                        {
+                            <option value="@dsg.Dsg_name" @(dsg.Dsg_name == Model?.Designation ? "selected" : "")>
+                                @dsg.Dsg_name
+                            </option>
+                        }
+                    </select>
+
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary btn-user btn-block">
+                    Update Employee
+                </button>
+                @if (ViewBag.Message != null)
+                {
+                    <div style="color:red;">
+                        @ViewBag.Message
+                    </div>
+                }
+
+            </form>
+
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    const today = new Date();
+    const maxdate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    const FrmtMaxDate = maxdate.toISOString().split('T')[0];
+    document.getElementById("dob").setAttribute("max", FrmtMaxDate);
+
+</script>
+<script>
+
+</script>
+<!-- jQuery first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/Scripts/sb-admin-2.min.js"></script>
+
+<!-- jQuery Validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //console.log("jQuery version:", $.fn.jquery);
+        //console.log("Validate plugin:", typeof $.fn.validate);
+  
+        $("#empForm").validate({
+            rules: {
+                Name: {
+                    required: true,
+                    minlength: 3
+                },
+                Email: {
+                    required: true,
+                    email: true
+                },
+                Phone: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 10,
+                    digits: true
+                },
+                DOB: {
+                    required: true
+                },
+                City: {
+                    required: true
+                },
+                Gender: {
+                    required: true
+                },
+                Designation: {
+                    required: true
+                },
+                Department: {   // 👈 small typo fixed (was Deparment)
+                    required: true
+                }
+            },
+            messages: {
+                Name: {
+                    required: "Please enter your Full Name !",
+                    minlength: "Username must be at least 3 characters !"
+                },
+                Email: {
+                    required: "Please enter your email !",
+                    email: "Enter a valid email address !"
+                },
+                Phone: {
+                    required: "Please enter Phone number !",
+                    minlength: "Phone number should be of 10 digits only !",
+                    maxlength: "Phone number should be of 10 digits only !",
+                    digits: "Phone number must contain digits only !"
+                },
+                DOB: {
+                    required: "Please choose your DOB !"
+                },
+                City: {
+                    required: "Please choose your City !"
+                },
+                Gender: {
+                    required: "Please choose your Gender !"
+                },
+                Designation: {
+                    required: "Please choose your Designation !"
+                },
+                Department: {
+                    required: "Please choose your Department !"
+                }
+            },
+            errorClass: "text-danger",
+            errorPlacement: function (error, element) {
+                if (element.attr("name") === "Gender") {
+                    // 👇 Append error message after the whole radio group container
+                    error.appendTo("#GenderContainer");
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+
+            // ✅ submitHandler is the correct way for AJAX
+            submitHandler: function (form) { // now we are in validator function so this will be a validaotr instance hence we didn't use 'this' here we used the 'form' to locate the form.
+                console.log("Form validation passed, now running AJAX !!");
+
+                const formdata = new FormData(form);
+
+                $.ajax({
+                    url: "/employee/Edit",
+                    type: "POST",
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.status) {
+                            Swal.fire('Success !', res.message, 'success').then(() => {
+                                window.location.href = "/Home/Dashboard";
+                            });
+                        } else {
+                            Swal.fire('Error !', res.message, 'error').then(() => {
+                                window.location.href = "/Employee/EditEmp";
+                            });
+                        }
+                    },
+                    error: function (xhr) {
+                        Swal.fire('Server Error !', xhr.message, 'error')
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+
+
+
+

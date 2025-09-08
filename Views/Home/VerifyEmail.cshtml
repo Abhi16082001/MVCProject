@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "VerifyEmail";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+@section Styles {
+    <link href="/Styles/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+}
+<div class="d-flex justify-content-center align-items-center min-vh-100 " style="background: linear-gradient(to bottom, rgba(216, 249, 216, 0.717), rgba(163, 249, 163, 0.475)) " ;>
+
+    <div class="card o-hidden border-0 shadow-lg " style="width: 40vw; background: linear-gradient(to right, rgba(54, 241, 126, 0.275),rgba(48, 180, 99, 0.275)) ">
+        <!-- fixed width -->
+        <div class="card-body p-5">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Enter OTP</h1>
+            </div>
+            <form id="OTP" class="user">
+                <div class="form-group">
+                    <input type="number" name="otp" id="otpfld" class="form-control form-control-user" placeholder="Enter OTP send to your Email Address...">
+                    @if (ViewBag.Message != null)
+                    {
+                        <div style="color:red;" align="center">
+                            @ViewBag.Message
+                        </div>
+                    }
+                </div>
+                <button type="submit" class="btn btn-primary btn-user btn-block">
+                    Verify Email
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- jQuery first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/Scripts/sb-admin-2.min.js"></script>
+
+<!-- jQuery Validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
+
+<script>
+
+
+
+
+       $('#OTP').on("submit", function (e) {
+      e.preventDefault();
+           const otpValue = $('#otpfld').val();
+
+$.ajax({
+    url: "/Home/VerifyOTP",
+    type: "POST",
+    data: { otp: otpValue },
+    dataType: "json",
+    success: function (res) {
+        if (res.status) {
+            Swal.fire('Success !', res.message, 'success').then(() => {
+                window.location.href = "/Home/ChangePwd";
+            });
+        } else {
+            Swal.fire('Error !', res.message, 'error').then(() => {
+                window.location.href = "/Home/VerifyEmail";
+            });
+        }
+    },
+    error: function (xhr) {
+        Swal.fire('Error !', xhr.message, 'error')
+    }
+});
+
+  });
+
+
+
+</script>
