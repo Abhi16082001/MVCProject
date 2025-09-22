@@ -12,6 +12,7 @@ using System.Net.Mail;
 using System.Runtime.Remoting.Contexts;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace FirstTasks.Controllers
 {
@@ -43,6 +44,7 @@ namespace FirstTasks.Controllers
             return View("Register");
         }
 
+        [Authorize]
         public ActionResult Dashboard()
         {
             using (var db = new AppDbContext())
@@ -364,7 +366,7 @@ namespace FirstTasks.Controllers
                             Session["ManagerPhone"] = user.Phone;
                             Session["UserData"] = user;
 
-
+                            FormsAuthentication.SetAuthCookie(lgn.Username, false);
                             return Json(new { status = true, message = "Logged In Successfully !!" });
 
 
