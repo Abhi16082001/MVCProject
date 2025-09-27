@@ -26,6 +26,7 @@ bld/
 out/
 Log/
 Logs/
+Output_Screenshots/
 
 # Web publish / output
 _PublishedWebsites/
