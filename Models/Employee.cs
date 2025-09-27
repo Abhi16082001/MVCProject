@@ -36,4 +36,10 @@ namespace FirstTasks.Models
         public string Manager { get; set; }
 
     }
+
+    public class Employee2
+    {
+        [Display(Name = "Enter Date")]
+        public DateTime EnterDate { get; set; }
+    }
 }

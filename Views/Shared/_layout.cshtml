@@ -16,15 +16,34 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 </head>
 
 <body>
     <header class="mynav">
-        <img src="~/images/MacreelLogo.png" alt="logo" />
+        <img src="~/images/naresh-it-logo.png" alt="logo" />
+
         <nav>
-            <a href="@Url.Action("Login", "Home")" id="login">Login</a>
+            <a class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Login" && ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")"
+               href="@Url.Action("Login", "Home")">Employee Management</a>
+
+            <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "QrCode" ? "active" : "")"
+               href="@Url.Action("Index", "QrCode")">QRCode Generator</a>
+
+            <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Calender" ? "active" : "")"
+               href="@Url.Action("Index", "Calender")">Calendar</a>
+
+            <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Calculator" ? "active" : "")"
+               href="@Url.Action("Index", "Calculator")">Calculator</a>
+
+            <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Weather" ? "active" : "")"
+               href="@Url.Action("Weather", "Weather")">Weather Forecast</a>
+
+            <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Captcha" ? "active" : "")"
+               href="@Url.Action("Index", "Captcha")">Captcha</a>
         </nav>
     </header>
+
     <div>
         @RenderBody()
     </div>

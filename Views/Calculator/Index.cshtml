@@ -1,0 +1,369 @@
+﻿@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+<style>
+    body {
+
+    }
+
+    #d1 {
+        margin-top: 5%;
+        display: inline-block;
+        width: 340px;
+        border: solid 2px black;
+        border-radius: 10px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+        font-family: Arial, sans-serif;
+      
+    }
+
+    h2 {
+        margin: 10px 0;
+        color: #333;
+    }
+
+    input[type="text"] {
+        width: 95%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        text-align: right;
+        box-sizing: border-box;
+    }
+
+    input[type="button"],
+    input[type="submit"],
+    input[type="reset"] {
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    input[type="button"] {
+        background-color: #f0f0f0;
+    }
+
+        input[type="button"]:hover {
+            background-color: #e0e0e0;
+        }
+
+    input[type="submit"] {
+        background-color: #007bff;
+        color: white;
+    }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+    input[type="reset"] {
+        background-color: #dc3545;
+        color: white;
+    }
+
+        input[type="reset"]:hover {
+            background-color: #a71d2a;
+        }
+
+    td {
+        padding: 5px;
+    }
+
+    #eq {
+        font-weight: bold;
+    }
+
+    #ce, #re {
+        font-size: 15px;
+    }
+
+    /* Result styling */
+    h2 + h2 {
+        color: #007bff;
+        font-weight: bold;
+    }
+</style>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#txt").keypress(function (e) {
+            if (String.fromCharCode(e.keyCode).match(/[^0-9+-/*]/g)) return false;
+        });
+        $("#txt").height("40px").width("312px");
+        for (let i = 0; i < 10; i++) {
+
+            $(`#b${i}`).click(function () {
+                var x = document.getElementById("txt").value;
+                if (x == "0") {
+                    $("#txt").val(`${i}`);
+                } else {
+                    $("#txt").val(x + `${i}`);
+                }
+            });
+
+        }
+        //$("#b0").click(function () {
+        //    var x = document.getElementById("txt").value;
+        //    if (x == "0") {
+        //        $("#txt").val("0");
+        //    } else {
+        //        $("#txt").val(x + "0")
+        //    }
+        //});
+        //$("#b1").click(function () {
+        //    var x = document.getElementById("txt").value;
+        //    if (x == "0") {
+        //        $("#txt").val("1");
+        //    } else {
+        //        $("#txt").val(x + "1")
+        //    }
+        //});
+        //$("#b2").click(function () {
+        //    var x = document.getElementById("txt").value;
+        //    if (x == "0") {
+        //        $("#txt").val("2");
+        //    } else {
+        //        $("#txt").val(x + "2")
+        //    }
+        //});
+        //$("#b3").click(function () {
+        //    var x = document.getElementById("txt").value;
+        //    if (x == "0") {
+        //        $("#txt").val("3");
+        //    } else {
+        //        $("#txt").val(x + "3")
+        //    }
+        //});
+        //$("#b4").click(function () {
+        //    var x = document.getElementById("txt").value;
+        //    if (x == "0") {
+        //        $("#txt").val("4");
+        //    } else {
+        //        $("#txt").val(x + "4")
+        //    }
+        //});
+        //$("#b5").click(function () {
+        //    var x = document.getElementById("txt").value;
+        //    if (x == "0") {
+        //        $("#txt").val("5");
+        //    } else {
+        //        $("#txt").val(x + "5")
+        //    }
+        //});
+        //$("#b6").click(function () {
+        //    var x = document.getElementById("txt").value;
+        //    if (x == "0") {
+        //        $("#txt").val("6");
+        //    } else {
+        //        $("#txt").val(x + "6")
+        //    }
+        //});
+        //$("#b7").click(function () {
+        //    var x = document.getElementById("txt").value;
+        //    if (x == "0") {
+        //        $("#txt").val("7");
+        //    } else {
+
+
+        //        $("#txt").val(x + "7")
+        //    }
+        //});
+        //$("#b8").click(function () {
+        //    var x = document.getElementById("txt").value;
+        //    if (x == "0") {
+        //        $("#txt").val("8");
+        //    } else {
+        //        $("#txt").val(x + "8")
+        //    }
+        //});
+        //$("#b9").click(function () {
+        //    var x = document.getElementById("txt").value;
+        //    if (x == "0") {
+        //        $("#txt").val("9");
+        //    } else {
+        //        $("#txt").val(x + "9")
+        //    }
+        //});
+        $("#div").click(function () {
+            var x = document.getElementById("txt").value;
+            var y = x.slice(-1)
+            if (y == "/" || y == "+" || y == "*" || y == "-") { } else {
+                $("#txt").val(x + "/")
+            }
+        });
+        $("#multy").click(function () {
+            var x = document.getElementById("txt").value;
+            //var x = document.getElementById("txt").value;
+            var y = x.slice(-1)
+            if (y == "/" || y == "+" || y == "*" || y == "-") { } else {
+                $("#txt").val(x + "*")
+            }
+        });
+        $("#sub").click(function () {
+            var x = document.getElementById("txt").value;
+            //var x = document.getElementById("txt").value;
+            //var x = document.getElementById("txt").value;
+            var y = x.slice(-1)
+            if (y == "/" || y == "+" || y == "*" || y == "-") { } else {
+                $("#txt").val(x + "-")
+            }
+        });
+        $("#add").click(function () {
+            var x = document.getElementById("txt").value;
+            //var x = document.getElementById("txt").value;
+            //var x = document.getElementById("txt").value;
+            //var x = document.getElementById("txt").value;
+            var y = x.slice(-1)
+            if (y == "/" || y == "+" || y == "*" || y == "-") { } else {
+                $("#txt").val(x + "+")
+            }
+        });
+        $("#dot").click(function () {
+            var x = document.getElementById("txt").value;
+            var y = x.slice(-1)
+            if (y == ".") { } else {
+                $("#txt").val(x + ".")
+
+
+
+            }
+        });
+        $("#ce").click(function () {
+            var x = document.getElementById("txt").value;
+            $("#txt").val(x.substring(0, x.length - 1))
+        });
+    });
+</script>
+
+<center>
+    <div id="d1">
+        @using (@Html.BeginForm("Index", "Calculator"))
+        {
+            <table>
+                <tr>
+                    <td colspan="4">
+                        <center>
+                            <h2>My Calculator</h2>
+                        </center>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">@Html.TextBox("txt", (string)ViewBag.result)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" id="b7" value="7"
+                               style="height:40px;width:75px" />
+                    </td>
+                    <td>
+                        <input type="button" id="b8" value="8"
+                               style="height:40px;width:75px" />
+                    </td>
+                    <td>
+                        <input type="button" id="b9" value="9"
+                               style="height:40px;width:75px" />
+                    </td>
+                    <td>
+                        <input type="button" id="div" value="/"
+                               style="height:40px;width:75px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" id="b4" value="4"
+                               style="height:40px;width:75px" />
+                    </td>
+                    <td>
+                        <input type="button" id="b5" value="5"
+                               style="height:40px;width:75px" />
+                    </td>
+                    <td>
+                        <input type="button" id="b6" value="6"
+                               style="height:40px;width:75px" />
+                    </td>
+
+
+                    <td>
+                        <input type="button" id="multy" value="*"
+                               style="height:40px;width:75px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" id="b1" value="1"
+                               style="height:40px;width:75px" />
+                    </td>
+                    <td>
+                        <input type="button" id="b2" value="2"
+                               style="height:40px;width:75px" />
+                    </td>
+                    <td>
+                        <input type="button" id="b3" value="3"
+                               style="height:40px;width:75px" />
+                    </td>
+                    <td>
+                        <input type="button" id="sub" value="-"
+                               style="height:40px;width:75px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" id="b0" value="0"
+                               style="height:40px;width:75px" />
+                    </td>
+                    <td>
+                        <input type="button" id="dot" value="."
+                               style="height:40px;width:75px" />
+                    </td>
+                    <td>
+                        <input type="button" id="add" value="+"
+                               style="height:40px;width:75px" />
+                    </td>
+                    <td>
+                        <input type="submit" id="eq" value="="
+                               style="height:40px;width:75px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="button" id="ce" value="CE"
+                               style="height:40px;width:155px" />
+                    </td>
+                    <td colspan="2">
+                        <input type="reset" id="re" value="Clear"
+                               style="height:40px;width:155px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <center>
+                            <h2>Result : @ViewBag.result</h2>
+                        </center>
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+</center>
+@if (@ViewBag.flag == 0)
+{
+    Response.Write("<script>alert('Right value is missing.')</script>");
+} 

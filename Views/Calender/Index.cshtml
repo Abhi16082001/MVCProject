@@ -1,0 +1,178 @@
+﻿@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+@model FirstTasks.Models.Employee2
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <!-- jQuery 1.10.2 (minified) -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+    <!-- jQuery Validate (v1.19.5 is the latest stable, since 1.10.2’s time validate wasn’t bundled) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
+    <!-- jQuery UI 1.11.4 CSS (Smoothness theme) -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+    <!-- jQuery 1.10.2 (uncompressed) -->
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <!-- jQuery UI 1.11.4 (uncompressed) -->
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $("#EnterDate").datepicker();
+        });
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+/*            background: #f8f9fa;*/
+            margin: 0;
+/*            padding: 20px;*/
+height:1000px;
+        }
+
+        .form-horizontal {
+            max-width: 600px;
+            margin:40px auto;
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+            
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction:row;
+            justify-content:center;
+        }
+
+        .control-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .col-md-2 {
+            width: 25%;
+            padding-right: 10px;
+/*            text-align: right;*/
+        }
+
+        .col-md-10 {
+            width: 75%;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+            .form-control:focus {
+                border-color: #007bff;
+                outline: none;
+                box-shadow: 0 0 6px rgba(0,123,255,0.25);
+            }
+
+        .text-danger {
+            font-size: 13px;
+            color: #dc3545;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out;                     
+        }
+
+        .btn-default {
+            background: #007bff;
+            border: none;
+            color: white;
+        }
+
+            .btn-default:hover {
+                background: #0056b3;
+            }
+
+       
+
+        /* Back to list link */
+        div > a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+            transition: color 0.2s ease-in-out;
+        }
+
+            div > a:hover {
+                color: #0056b3;
+                text-decoration: underline;
+            }
+    </style>
+
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.EnterDate, htmlAttributes: new
+                {
+                    @class
+= "control-label col-md-2"
+                })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EnterDate, new
+                    {
+                        htmlAttributes =
+new { @class = "form-control" }
+                    })
+                    @Html.ValidationMessageFor(model => model.EnterDate, "", new
+                    {
+@class = "text-danger"
+                    })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+
+
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html> 

@@ -1,0 +1,191 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Weather</title>
+    <!-- jQuery UI CSS (optional, for styling widgets like Datepicker, Dialog, etc.) -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <style>
+        h1 {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        div {
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            font-family: Arial, sans-serif;
+        }
+
+        strong {
+            color: #333;
+        }
+
+        #txtCity {
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            width: calc(100% - 20px);
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #007bff;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+            table td {
+                padding: 8px;
+                border-bottom: 1px solid #ddd;
+            }
+
+                table td strong {
+                    display: inline-block;
+                    width: 150px;
+                }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 30px;
+            font-size: 20px;
+        }
+
+        label, span {
+            font-weight: normal;
+            color: #555;
+        }
+
+        /* Optional icon styling */
+        #imgWeatherIconUrl {
+            display: block;
+            margin: 10px auto;
+            width: 80px;
+            height: 80px;
+        }
+    </style>
+
+
+</head>
+<body>
+    <h1>Search City and Get Weather Forecast</h1>
+    <div>
+        <strong>City Name :</strong><input id="txtCity" type="text" />
+        <br />
+        <br />
+        <button id="btnSubmit">Get Weather Forecast</button>
+    </div>
+    <div>
+        <h2>Weather Forecast</h2>
+        <table>
+            <!--<tr>
+                <td>-->
+            @*Weather Symbol Icon <img id="imgWeatherIconUrl" src="" title="Weather Icon"
+                />*@
+            <!--</td>
+            </tr>-->
+            <tr>
+                <td>
+                    <strong>City:</strong>
+                    <span id="lblCity"></span> 
+                    <span id="lblCountry"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Latitude:</strong>
+                    <label id="lblLat"></label><br />
+                    <strong>Longitude:</strong>
+                    <label id="lblLon"></label>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Description:</strong>
+                    <label id="lblDescription"></label><br />
+                    <strong>Humidity:</strong>
+                    <label id="lblHumidity"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Temperature (Feels Like)<label id="lblTempFeelsLike"></label><br />
+                    Temperature <label id="lblTemp"></label><br />
+                    Temperature (Min)<label id="lblTempMin"></label><br />
+                    Temperature (Max)<label id="lblTempMax"></label><br />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- jQuery 1.10.2 -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+    <!-- jQuery UI 1.11.4 -->
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+
+
+
+
+    <script>
+
+        $("#btnSubmit").click(function () {
+            var cityname = $("#txtCity").val();
+            if (cityname.length > 0) {
+                $.ajax({
+                    url: "https://localhost:44346/Weather/WeatherDetail?City=" + cityname,
+                    type: "POST",
+                    success: function (rsltval) {
+                        var data = JSON.parse(rsltval);
+                        console.log(data);
+                        $("#lblCity").html(data.City);
+                        $("#lblCountry").text(data.Country);
+                        $("#lblLat").text(data.Lat);
+                        $("#lblLon").text(data.Lon);
+                        $("#lblDescription").text(data.Description);
+                        $("#lblHumidity").text(data.Humidity);
+                        $("#lblTempFeelsLike").text(data.TempFeelsLike);
+                        $("#lblTemp").text(data.Temp);
+                        $("#lblTempMax").text(data.TempMax);
+                        $("#lblTempMin").text(data.TempMin);
+                        $("#imgWeatherIconUrl").attr("src",
+                            "http://openweathermap.org/img/w/" + data.WeatherIcon + ".png");
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+            else {
+                alert("City Not Found");
+            }
+        });
+    </script>
+</body>
+</html>

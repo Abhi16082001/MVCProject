@@ -474,7 +474,43 @@ document.addEventListener("DOMContentLoaded", function() {
         //console.log("jQuery version:", $.fn.jquery);
         //console.log("Validate plugin:", typeof $.fn.validate);
 
-        $('#delete').on("click", function (e) {
+
+            $('#Deptcnt').on("click", function (e) {
+        e.preventDefault();
+        Swal.fire({
+            title: "List of Departments",
+            html: ` <ul style="text-align:left; list-style:disc; margin-left:20px;">
+                @foreach (var dept in depts)
+                {
+                    <li>@dept</li>
+                }
+            </ul>`,
+            icon: "info"
+        })
+
+     });
+
+
+
+    $('#Dsgcnt').on("click", function (e) {
+       e.preventDefault();
+       Swal.fire({
+           title: "List of Designations",
+           html: ` <ul style="text-align:left; list-style:disc; margin-left:20px;">
+               @foreach (var desg in dsgns)
+               {
+                   <li>@desg</li>
+               }
+           </ul>`,
+           icon: "info"
+       })
+
+      });
+
+
+
+
+        $(document).on("click","#delete", function (e) {
             e.preventDefault();
             let empId = $(this).data("id"); // get emp.Eid from attribute
 
@@ -510,37 +546,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-    $('#Deptcnt').on("click", function (e) {
-        e.preventDefault();
-        Swal.fire({
-            title: "List of Departments",
-            html: ` <ul style="text-align:left; list-style:disc; margin-left:20px;">
-                @foreach (var dept in depts)
-                {
-                    <li>@dept</li>
-                }
-            </ul>`,
-            icon: "info"
-        })
 
-    });
-
-
-
-    $('#Dsgcnt').on("click", function (e) {
-       e.preventDefault();
-       Swal.fire({
-           title: "List of Designations",
-           html: ` <ul style="text-align:left; list-style:disc; margin-left:20px;">
-               @foreach (var desg in dsgns)
-               {
-                   <li>@desg</li>
-               }
-           </ul>`,
-           icon: "info"
-       })
-
-   });
 
 
 
@@ -550,7 +556,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Get JSON from data-emp
         const empData = $(this).attr("data-emp");
         const emp = JSON.parse(empData);
-        let dob = emp.DOB;        
+        let dob = emp.DOB;
         if (dob && dob.includes("/Date")) {
             let d = new Date(parseInt(dob.replace(/\/Date\((\d+)\)\//, "$1")));
             dob = d.toLocaleDateString();
@@ -566,8 +572,8 @@ document.addEventListener("DOMContentLoaded", function() {
         <tr><td><strong>Department:</strong></td><td>${emp.Department}</td></tr>
         <tr><td><strong>Designation:</strong></td><td>${emp.Designation}</td></tr>
         <tr><td><strong>City:</strong></td><td>${emp.City}</td></tr>
-    </table>
-    `;
+     </table>
+      `;
 
         Swal.fire({
             title: "Employee Details",
@@ -576,10 +582,11 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+ 
 
     $(document).on("click", "#loadmore a", function (e) {
-        e.preventDefault();                  
-     
+        e.preventDefault();
+
         $.ajax({
             url: "/Employee/LoadMore",
             type: "GET",
@@ -592,9 +599,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         Swal.fire("Server Error!", xhr.responseText, "error");
                     }
                 });
-            
+
     });
-    
+
 
 </script>
   

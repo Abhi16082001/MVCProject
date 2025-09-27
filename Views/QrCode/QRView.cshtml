@@ -1,0 +1,34 @@
+﻿@model FirstTasks.Models.QrCode
+
+@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View</title>
+</head>
+<body>
+    @using (Html.BeginForm("CreateQR", "QrCode", FormMethod.Post, new { style = "display:flex;flex-direction:column; width:70%; margin:auto;" }))
+    {
+        <h1 align="center">QR Code Generator</h1>
+        <br /> <br />
+        <div style="display:flex; flex-direction:column;margin:auto; width:70%;">
+            @Html.Label("Enter the URL :", new { style = "margin:auto;" })
+            @Html.TextBoxFor(model => model.QRCodeText, new { style = "width:100%; padding:5px;" })
+        </div>
+        <br />
+        <input type="submit" value="Create QR" style="width:20%; margin:auto; padding:10px;" />
+
+        if (!string.IsNullOrEmpty(Model.QRImageURL))
+        {
+            <div>
+                <img alt="QR Code" src="@Model.QRImageURL" width="300" height="300" style="margin:auto; display:flex;" />
+            </div>
+        }
+    }
+</body>
+</html>
